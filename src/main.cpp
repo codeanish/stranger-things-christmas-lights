@@ -20,12 +20,15 @@ void setup() {
   delay(2000);
 }
 
-int datArray[] = {B00000000, B10000000, B11000000, B11100000, B11110000, B11111000, B11111100, B11111110, B11111111};
+int datArray[] = {B00000000, B10000000, B01000000, B00100000, B00010000, B00001000, B00000100, B00000010, B00000001};
 
 void loop() {
   for(int value = 0; value < 9; value++) {
     digitalWrite(latchClock, LOW);
     Serial.println(datArray[value], BIN);
+    shiftOut(serialData, shiftClock, LSBFIRST, datArray[value]);
+    shiftOut(serialData, shiftClock, LSBFIRST, datArray[value]);
+    shiftOut(serialData, shiftClock, LSBFIRST, datArray[value]);
     shiftOut(serialData, shiftClock, LSBFIRST, datArray[value]);
     digitalWrite(latchClock, HIGH);
     delay(2000);
