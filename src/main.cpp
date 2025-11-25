@@ -1,8 +1,8 @@
 #include <Arduino.h>
 
 const int serialData = 25;
-const int shiftClock = 26;
-const int latchClock = 27;
+const int shiftClock = 27;
+const int latchClock = 26;
 const int clearPin = 33;
 
 void setup() {
@@ -12,14 +12,9 @@ void setup() {
   pinMode(latchClock, OUTPUT);
   pinMode(clearPin, OUTPUT);  // Add this!
 
-  // Clear the shift register, then return SRCLR to HIGH (normal operation)
   digitalWrite(clearPin, LOW);
-  delay(10);  // Brief pulse for clear
+  delay(50);  // Brief pulse for clear
   digitalWrite(clearPin, HIGH);
-
-  digitalWrite(latchClock, LOW);
-  shiftOut(serialData, shiftClock, MSBFIRST, B1111111);
-  digitalWrite(latchClock, HIGH);
 
   Serial.println("Setup complete");
   delay(2000);
@@ -31,7 +26,7 @@ void loop() {
   for(int value = 0; value < 9; value++) {
     digitalWrite(latchClock, LOW);
     Serial.println(datArray[value], BIN);
-    shiftOut(serialData, shiftClock, MSBFIRST, datArray[value]);
+    shiftOut(serialData, shiftClock, LSBFIRST, datArray[value]);
     digitalWrite(latchClock, HIGH);
     delay(2000);
   }
